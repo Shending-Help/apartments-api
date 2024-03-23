@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateApartmentDto } from './dto/create-apartment.dto';
 import { UpdateApartmentDto } from './dto/update-apartment.dto';
 import { Apartment } from './entities/apartment.entity';
@@ -9,25 +9,65 @@ import { Repository } from 'typeorm';
 export class ApartmentsService {
   constructor(
     @InjectRepository(Apartment)
-    private readonly userRepository: Repository<Apartment>,
+    private readonly apartmentRepository: Repository<Apartment>,
   ) {}
-  create(createApartmentDto: CreateApartmentDto) {
-    return 'This action adds a new apartment';
+  async create(createApartmentDto: CreateApartmentDto) {
+    const apartment = this.apartmentRepository.create(createApartmentDto);
+    try {
+      return this.apartmentRepository.save(apartment);
+    } catch (error) {
+      throw new HttpException(
+        'Failed to add apartment. Please try again later.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  findAll() {
-    return `This action returns all apartments`;
+  async findAll() {
+    try {
+      return await this.apartmentRepository.find();
+    } catch (error) {
+      throw new HttpException(
+        'Failed to fetch apartments. Please try again later.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} apartment`;
+  async findOne(id: number) {
+    try {
+      return await this.apartmentRepository.findOneOrFail({
+        where: { id },
+      });
+    } catch (error) {
+      throw new HttpException(
+        'Failed to fetch apartment. Please try again later.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  update(id: number, updateApartmentDto: UpdateApartmentDto) {
-    return `This action updates a #${id} apartment`;
+  async update(id: number, updateApartmentDto: Partial<UpdateApartmentDto>) {
+    try {
+      return await this.apartmentRepository.update(id, updateApartmentDto);
+    } catch (error) {
+      throw new HttpException(
+        'Failed to update apartment. Please try again later.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} apartment`;
+  async remove(id: number) {
+    try {
+      return await this.apartmentRepository.delete({
+        id,
+      });
+    } catch (error) {
+      throw new HttpException(
+        'Failed to delete apartment. Please try again later.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

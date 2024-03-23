@@ -10,36 +10,195 @@ import {
 import { ApartmentsService } from './apartments.service';
 import { CreateApartmentDto } from './dto/create-apartment.dto';
 import { UpdateApartmentDto } from './dto/update-apartment.dto';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Apartment } from './entities/apartment.entity';
 
+@ApiTags('Apartments')
 @Controller('apartments')
 export class ApartmentsController {
   constructor(private readonly apartmentsService: ApartmentsService) {}
 
+  @ApiCreatedResponse({
+    description: 'The record has been successfully created.',
+    type: Apartment,
+    schema: {
+      example: {
+        title: 'New Cairo Villa',
+        description: 'villa for sale in new cairo',
+        price: 10000000,
+        location: 'New Cairo',
+        bedrooms: 10,
+        bathrooms: 10,
+        size: 10,
+        id: 2,
+        available: true,
+        isDeleted: false,
+        createdAt: '2024-03-23T13:53:30.356Z',
+        updatedAt: '2024-03-23T13:53:30.356Z',
+      },
+    },
+  })
+  @ApiBadRequestResponse({
+    description: 'Failed to add apartment. Data is invalid or missing.',
+    schema: {
+      example: {
+        message: ['title must be a string', 'price must be a positive number'],
+        error: 'Bad Request',
+        statusCode: 400,
+      },
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Failed to retrieve apartments. System failure.',
+    schema: {
+      example: {
+        "statusCode": 500,
+        "message": 'Failed to add apartment. Please try again later.',
+      },
+    },
+  })
   @Post()
-  create(@Body() createApartmentDto: CreateApartmentDto) {
-    return this.apartmentsService.create(createApartmentDto);
+  async create(@Body() createApartmentDto: CreateApartmentDto) {
+    return await this.apartmentsService.create(createApartmentDto);
   }
-
+  @ApiOkResponse({
+    description: 'The record has been successfully created.',
+    type: [Apartment],
+    schema: {
+      example: [
+        {
+          title: 'New Cairo Villa',
+          description: 'villa for sale in new cairo',
+          price: 10000000,
+          location: 'New Cairo',
+          bedrooms: 10,
+          bathrooms: 10,
+          size: 10,
+          id: 2,
+          available: true,
+          isDeleted: false,
+          createdAt: '2024-03-23T13:53:30.356Z',
+          updatedAt: '2024-03-23T13:53:30.356Z',
+        },
+        {
+          title: 'New Cairo Villa 2',
+          description: 'villa for sale in new cairo',
+          price: 10000000,
+          location: 'New Cairo',
+          bedrooms: 10,
+          bathrooms: 10,
+          size: 10,
+          id: 3,
+          available: true,
+          isDeleted: false,
+          createdAt: '2024-03-23T13:53:30.356Z',
+          updatedAt: '2024-03-23T13:53:30.356Z',
+        },
+      ],
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Failed to retrieve apartments. System failure.',
+    schema: {
+      example: {
+        "statusCode": 500,
+        "message": "Failed to fetch apartments. Please try again later."
+      },
+    },
+  })
   @Get()
-  findAll() {
-    return this.apartmentsService.findAll();
+  async findAll() {
+    return await this.apartmentsService.findAll();
   }
 
+  @ApiOkResponse({
+    description: 'The record has been successfully created.',
+    type: [Apartment],
+    schema: {
+      example: {
+        title: 'New Cairo Villa',
+        description: 'villa for sale in new cairo',
+        price: 10000000,
+        location: 'New Cairo',
+        bedrooms: 10,
+        bathrooms: 10,
+        size: 10,
+        id: 2,
+        available: true,
+        isDeleted: false,
+        createdAt: '2024-03-23T13:53:30.356Z',
+        updatedAt: '2024-03-23T13:53:30.356Z',
+      },
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Failed to retrieve apartments. System failure.',
+    schema: {
+      example: {
+        statusCode: 500,
+        message: 'Failed to fetch apartments. Please try again later.',
+      },
+    },
+  })
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.apartmentsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.apartmentsService.findOne(+id);
   }
 
+  @ApiOkResponse({
+    description: 'The record has been successfully updated.',
+    type: [Apartment],
+    schema: {
+      example: {
+        title: 'New Cairo Villa',
+        description: 'villa for sale in new cairo',
+        price: 10000000,
+        location: 'New Cairo',
+        bedrooms: 10,
+        bathrooms: 10,
+        size: 10,
+        id: 2,
+        available: true,
+        isDeleted: false,
+        createdAt: '2024-03-23T13:53:30.356Z',
+        updatedAt: '2024-03-23T13:53:30.356Z',
+      },
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Failed to update apartment. System failure.',
+    schema: {
+      example: {
+        statusCode: 500,
+        message: 'Failed to update apartment. Please try again later.',
+      },
+    },
+  })
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateApartmentDto: UpdateApartmentDto,
   ) {
-    return this.apartmentsService.update(+id, updateApartmentDto);
+    return await this.apartmentsService.update(+id, updateApartmentDto);
   }
 
+  @ApiInternalServerErrorResponse({
+    description: 'Failed to retrieve apartments. System failure.',
+    schema: {
+      example: {
+        statusCode: 500,
+        message: 'Failed to fetch apartments. Please try again later.',
+      },
+    },
+  })
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.apartmentsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.apartmentsService.remove(+id);
   }
 }

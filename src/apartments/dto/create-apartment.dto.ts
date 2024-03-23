@@ -4,17 +4,26 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNumber, IsNotEmpty, IsPositive } from 'class-validator';
 
 export class CreateApartmentDto {
-  @ApiProperty({ description: 'The title of the apartment' })
+  @ApiProperty({
+    description: 'The title of the apartment',
+    required: true,
+  })
   @IsNotEmpty()
   @IsString()
   title: string;
 
-  @ApiProperty({ description: 'The description of the apartment' })
-  @IsNotEmpty()
+  @ApiProperty({
+    description: 'The description of the apartment',
+    required: false,
+  })
   @IsString()
-  description: string;
+  description?: string;
 
-  @ApiProperty({ description: 'The price of the apartment', type: Number })
+  @ApiProperty({
+    description: 'The price of the apartment',
+    type: Number,
+    required: true,
+  })
   @IsNotEmpty()
   @IsPositive()
   price: number;
