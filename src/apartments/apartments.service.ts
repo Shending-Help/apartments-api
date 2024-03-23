@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CreateApartmentDto } from './dto/create-apartment.dto';
 import { UpdateApartmentDto } from './dto/update-apartment.dto';
+import { Apartment } from './entities/apartment.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ApartmentsService {
+  constructor(
+    @InjectRepository(Apartment)
+    private readonly userRepository: Repository<Apartment>,
+  ) {}
   create(createApartmentDto: CreateApartmentDto) {
     return 'This action adds a new apartment';
   }
