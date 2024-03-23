@@ -15,6 +15,7 @@ import {
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
+  ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
 import { Apartment } from './entities/apartment.entity';
@@ -24,6 +25,7 @@ import { Apartment } from './entities/apartment.entity';
 export class ApartmentsController {
   constructor(private readonly apartmentsService: ApartmentsService) {}
 
+  @ApiOperation({ summary: 'Create a new apartment' })
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: Apartment,
@@ -58,8 +60,8 @@ export class ApartmentsController {
     description: 'Failed to retrieve apartments. System failure.',
     schema: {
       example: {
-        "statusCode": 500,
-        "message": 'Failed to add apartment. Please try again later.',
+        statusCode: 500,
+        message: 'Failed to add apartment. Please try again later.',
       },
     },
   })
@@ -67,6 +69,8 @@ export class ApartmentsController {
   async create(@Body() createApartmentDto: CreateApartmentDto) {
     return await this.apartmentsService.create(createApartmentDto);
   }
+
+  @ApiOperation({ summary: 'Retrieve all apartments' })
   @ApiOkResponse({
     description: 'The record has been successfully created.',
     type: [Apartment],
@@ -107,8 +111,8 @@ export class ApartmentsController {
     description: 'Failed to retrieve apartments. System failure.',
     schema: {
       example: {
-        "statusCode": 500,
-        "message": "Failed to fetch apartments. Please try again later."
+        statusCode: 500,
+        message: 'Failed to fetch apartments. Please try again later.',
       },
     },
   })
@@ -117,6 +121,7 @@ export class ApartmentsController {
     return await this.apartmentsService.findAll();
   }
 
+  @ApiOperation({ summary: 'Retrieve a single apartment' })
   @ApiOkResponse({
     description: 'The record has been successfully created.',
     type: [Apartment],
@@ -151,6 +156,7 @@ export class ApartmentsController {
     return await this.apartmentsService.findOne(+id);
   }
 
+  @ApiOperation({ summary: 'Update a single apartment' })
   @ApiOkResponse({
     description: 'The record has been successfully updated.',
     type: [Apartment],
@@ -188,6 +194,16 @@ export class ApartmentsController {
     return await this.apartmentsService.update(+id, updateApartmentDto);
   }
 
+  @ApiOperation({ summary: 'Delete a single apartment' })
+  @ApiOkResponse({
+    description: 'The record has been successfully deleted.',
+    schema: {
+      example: {
+        raw: [],
+        affected: 1,
+      },
+    },
+  })
   @ApiInternalServerErrorResponse({
     description: 'Failed to retrieve apartments. System failure.',
     schema: {

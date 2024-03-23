@@ -11,6 +11,11 @@ export class ApartmentsService {
     @InjectRepository(Apartment)
     private readonly apartmentRepository: Repository<Apartment>,
   ) {}
+  /**
+   * @description - Create a new apartment
+   * @param createApartmentDto  - The data to create a new apartment
+   * @returns - The newly created apartment
+   */
   async create(createApartmentDto: CreateApartmentDto) {
     const apartment = this.apartmentRepository.create(createApartmentDto);
     try {
@@ -23,6 +28,10 @@ export class ApartmentsService {
     }
   }
 
+  /**
+   * @description - Fetch all apartments
+   * @returns {Apartment[]} - All apartments
+   */
   async findAll() {
     try {
       return await this.apartmentRepository.find();
@@ -34,6 +43,11 @@ export class ApartmentsService {
     }
   }
 
+  /**
+   * @description - Fetch a single apartment
+   * @param id - The id of the apartment to fetch
+   * @returns {Apartment} - The apartment
+   */
   async findOne(id: number) {
     try {
       return await this.apartmentRepository.findOneOrFail({
@@ -47,6 +61,12 @@ export class ApartmentsService {
     }
   }
 
+  /**
+   * @description - Update an apartment
+   * @param id  - The id of the apartment to update
+   * @param updateApartmentDto - The data to update the apartment
+   * @returns - The updated apartment
+   */
   async update(id: number, updateApartmentDto: Partial<UpdateApartmentDto>) {
     try {
       return await this.apartmentRepository.update(id, updateApartmentDto);
@@ -58,6 +78,11 @@ export class ApartmentsService {
     }
   }
 
+  /**
+   * @description - Delete an apartment
+   * @param id - The id of the apartment to delete
+   * @returns number of rows affected
+   */
   async remove(id: number) {
     try {
       return await this.apartmentRepository.delete({
