@@ -11,6 +11,6 @@ async function bootstrap() {
     methods: 'GET, POST, PATCH, DELETE, PUT, OPTIONS',
   });
   swaggerRunner(app);
-  await app.listen(4000);
+  await app.listen(8080);
 }
 bootstrap();

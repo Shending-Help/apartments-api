@@ -1,7 +1,4 @@
 export const envConstants = {
-  ENV_CONSTANT: 'NODE_ENV',
-  //basic app info
-  APPPORT: 'APP_PORT',
   //database values
   POSTGRESDB: {
     dbHost: 'DB_HOST',

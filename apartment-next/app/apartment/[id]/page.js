@@ -41,7 +41,7 @@ const page = ({ params }) => {
   React.useEffect(() => {
     const fetchApartment = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/apartments/${id}`);
+        const response = await fetch(`http://localhost:8080/apartments/${id}`);
         const data = await response.json();
         setApartment(data);
       } catch (error) {

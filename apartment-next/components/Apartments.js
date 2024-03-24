@@ -9,7 +9,7 @@ const Apartments = () => {
   useEffect(() => {
     const fetchApartments = async () => {
       try {
-        const response = await fetch("http://localhost:4000/apartments");
+        const response = await fetch("http://localhost:8080/apartments");
         const data = await response.json();
         setApartments(data);
       } catch (error) {

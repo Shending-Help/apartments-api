@@ -1,0 +1,43 @@
+version: '3'
+services:
+
+  apartments-postgres:
+    image: postgres:14.1-alpine
+    container_name: apartments-postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=apartments_db
+    volumes:
+      - apartments-data:/var/lib/postgresql/data  
+    ports:
+      - '5450:5432'
+
+  apartments-api:
+    build: ../api
+    container_name: apartments-api
+    environment:
+      - DB_HOST=apartments-postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=apartments_db
+    ports:
+      - 8080:8080
+    links:
+      - apartments-postgres
+
+  apartments-ui:
+    build: ../apartment-next
+    container_name: apartments-ui
+    ports:
+      - 4200:4200
+    links:
+      - apartments-api
+
+
+volumes:
+  apartments-postgres:
+      driver: local
+  apartments-data:
