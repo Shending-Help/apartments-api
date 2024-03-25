@@ -49,3 +49,26 @@ Follow these steps to run the Apartments application:
 - The `docker-compose.yml` file defines the configuration for the Docker services required by the Apartments application.
 - Environment variables such as database credentials and connection settings are configured within the Docker Compose file.
 - Ensure that the port mappings for the services (`apartments-api`, `apartments-ui`) do not conflict with other services running on your machine.
+
+### Running The React Native App
+1. Navigate to the root directory of the cloned repository.
+
+    ```
+    cd apartments-api
+    ```
+2. Navigate to the react native app directory.
+
+    ```
+    cd apartments-mobile
+    ```
+3. Install the dependencies.
+
+    ```
+    npm install
+    ```
+4. Run the app.
+
+    ```
+    npm run start
+    ```
+    choose the option to run on web and adjust window size or on android/ios emulator if you have them set up.
