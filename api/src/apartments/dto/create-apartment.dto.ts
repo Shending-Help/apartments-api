@@ -33,6 +33,10 @@ export class CreateApartmentDto {
   @IsString()
   location: string;
 
+  @ApiProperty({ description: 'The image of the apartment' })
+  @IsString()
+  image?: string;
+
   @ApiProperty({
     description: 'The number of bedrooms in the apartment',
     type: Number,
