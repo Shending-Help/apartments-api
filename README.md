@@ -33,7 +33,7 @@ Follow these steps to run the Apartments application:
     This command will download necessary Docker images, build custom images (if applicable), and start the containers in detached mode.(omit -d first time to see logs)
 
 2. **Accessing the Application**:
-    - The API service will be accessible at [http://localhost:8080](http://localhost:8080).
+    - The API service will be accessible at [http://localhost:8080](http://localhost:8080). You can use Swagger UI to interact with the API. it is available at [http://localhost:8080/api-docs](http://localhost:8080/api-docs).
     - The UI service will be accessible at [http://localhost:4200](http://localhost:4200).
 
 3. **Stopping the Application**:
