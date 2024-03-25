@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { truncate } from "../../utlis/truncate";
 
 export default function ImgMediaCard({
+  image,
   title,
   description,
   location,
@@ -21,7 +22,7 @@ export default function ImgMediaCard({
       <CardMedia
         component="img"
         alt="green iguana"
-        src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhdXRpZnVsJTIwaG91c2V8ZW58MHx8MHx8fDA%3D"
+        src={image}
         className="h-64 w-full object-cover"
       />
       <CardContent>

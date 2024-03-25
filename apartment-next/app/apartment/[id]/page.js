@@ -6,37 +6,10 @@ import ActiveLastBreadcrumb from "@/components/ui/Breadcrumb";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-const slides = [
-  {
-    url: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhdXRpZnVsJTIwaG91c2V8ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YmVhdXRpZnVsJTIwaG91c2V8ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    url: "https://plus.unsplash.com/premium_photo-1682377521715-95d16dc51943?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGJlYXV0aWZ1bCUyMGhvdXNlfGVufDB8fDB8fHww",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhdXRpZnVsJTIwaG91c2V8ZW58MHx8MHx8fDA%3D",
-  },
-];
-
 const page = ({ params }) => {
   const { id } = params;
   const [apartment, setApartment] = React.useState({});
   const [currentIndex, setCurrentIndex] = React.useState(0);
-
-  const prevSlide = () => {
-    const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-  };
-
-  const nextSlide = () => {
-    const isLastSlide = currentIndex === slides.length - 1;
-    const newIndex = isLastSlide ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-  };
 
   React.useEffect(() => {
     const fetchApartment = async () => {
@@ -60,15 +33,9 @@ const page = ({ params }) => {
         </div>
         <div className="flex justify-start items-center py-2 relative group">
           <div
-            style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
+            style={{ backgroundImage: `url(${apartment.image})` }}
             className="w-[900px] h-[500px] rounded-2xl bg-center bg-cover duration-500"
           ></div>
-          <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50%] left-5 rounded-full p-2 bg-black/20 text-white cursor-pointer">
-            <ArrowBackIosNewIcon onClick={prevSlide} />
-          </div>
-          <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[50%] right-5 rounded-full p-2 bg-black/20 text-white cursor-pointer">
-            <ArrowForwardIosIcon onClick={nextSlide} />
-          </div>
         </div>
         <div className="py-2">
           <h1 className="text-3xl font-semibold">{apartment.title}</h1>

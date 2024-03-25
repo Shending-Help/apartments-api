@@ -34,6 +34,7 @@ const Apartments = () => {
               bathrooms={apartment.bathrooms}
               price={apartment.price}
               size={apartment.size}
+              image={apartment.image}
             />
           </Link>
         ))}
