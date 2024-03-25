@@ -18,7 +18,6 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { Apartment } from './entities/apartment.entity';
 
 @ApiTags('Apartments')
 @Controller('apartments')
@@ -28,7 +27,6 @@ export class ApartmentsController {
   @ApiOperation({ summary: 'Create a new apartment' })
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
-    type: Apartment,
     schema: {
       example: {
         title: 'New Cairo Villa',
@@ -36,6 +34,7 @@ export class ApartmentsController {
         price: 10000000,
         location: 'New Cairo',
         bedrooms: 10,
+        image: 'https://example.com/image.jpg',
         bathrooms: 10,
         size: 10,
         id: 2,
@@ -73,7 +72,6 @@ export class ApartmentsController {
   @ApiOperation({ summary: 'Retrieve all apartments' })
   @ApiOkResponse({
     description: 'The record has been successfully created.',
-    type: [Apartment],
     schema: {
       example: [
         {
@@ -86,6 +84,7 @@ export class ApartmentsController {
           size: 10,
           id: 2,
           available: true,
+          image: 'https://example.com/image.jpg',
           isDeleted: false,
           createdAt: '2024-03-23T13:53:30.356Z',
           updatedAt: '2024-03-23T13:53:30.356Z',
@@ -97,6 +96,7 @@ export class ApartmentsController {
           location: 'New Cairo',
           bedrooms: 10,
           bathrooms: 10,
+          image: 'https://example.com/image.jpg',
           size: 10,
           id: 3,
           available: true,
@@ -105,6 +105,16 @@ export class ApartmentsController {
           updatedAt: '2024-03-23T13:53:30.356Z',
         },
       ],
+    },
+  })
+  @ApiBadRequestResponse({
+    description: 'Failed to add apartment. Data is invalid or missing.',
+    schema: {
+      example: {
+        message: ['title must be a string', 'price must be a positive number'],
+        error: 'Bad Request',
+        statusCode: 400,
+      },
     },
   })
   @ApiInternalServerErrorResponse({
@@ -124,13 +134,13 @@ export class ApartmentsController {
   @ApiOperation({ summary: 'Retrieve a single apartment' })
   @ApiOkResponse({
     description: 'The record has been successfully created.',
-    type: [Apartment],
     schema: {
       example: {
         title: 'New Cairo Villa',
         description: 'villa for sale in new cairo',
         price: 10000000,
         location: 'New Cairo',
+        image: 'https://example.com/image.jpg',
         bedrooms: 10,
         bathrooms: 10,
         size: 10,
@@ -159,7 +169,6 @@ export class ApartmentsController {
   @ApiOperation({ summary: 'Update a single apartment' })
   @ApiOkResponse({
     description: 'The record has been successfully updated.',
-    type: [Apartment],
     schema: {
       example: {
         title: 'New Cairo Villa',
@@ -167,6 +176,7 @@ export class ApartmentsController {
         price: 10000000,
         location: 'New Cairo',
         bedrooms: 10,
+        image: 'https://example.com/image.jpg',
         bathrooms: 10,
         size: 10,
         id: 2,
